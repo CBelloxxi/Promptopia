@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
     serverComponentsExternalPackages: ["mongoose"],
+    appDir: true,
   },
   images: {
     domains: ['lh3.googleusercontent.com'],

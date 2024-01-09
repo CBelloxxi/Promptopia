@@ -1,4 +1,10 @@
+import { connectToDB } from '@utils/database';
 import { Schema, model, models } from 'mongoose';
+
+await connectToDB();
+console.log('User Model is Ready!')
+
+
 
 const UserSchema = new Schema({
   email: {
@@ -16,6 +22,6 @@ const UserSchema = new Schema({
   }
 });
 
-const User = models.user || model('User', UserSchema);
+const User = models.User || model('User', UserSchema);
 
 export default User;
