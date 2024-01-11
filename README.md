@@ -2,6 +2,7 @@ Still To Do:
 - Implement Search
 - Implement Click on tag
 - Implement View other profiles
+- Add favicon to the root/app
 
 ** Hint for Search and Click on Tag ** {
 
