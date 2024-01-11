@@ -19,7 +19,7 @@ const EditPrompt = () => {
   // Get Prompt Details
   useEffect (() => {
     const getPromptDetails = async () => {
-      const response = await fetch(`/api/prompt${promptId}`)
+      const response = await fetch(`/api/prompt/${promptId}`)
       const data = await response.json();
 
       setPost({
@@ -29,7 +29,7 @@ const EditPrompt = () => {
     }
 
     if(promptId) getPromptDetails()
-  }, [promptId], console.log("whats this"))
+  }, [promptId])
 
 
   // Update Prompt
@@ -40,7 +40,7 @@ const EditPrompt = () => {
     if(!promptId) return alert('Prompt ID not found')
 
     try {
-      const response = await fetch(`/api/prompt/${promptId}` ,{
+      const response = await fetch(`/api/prompt/${promptId}`, {
         method: 'PATCH',
         body: JSON.stringify({
           prompt: post.prompt,
@@ -51,14 +51,13 @@ const EditPrompt = () => {
         },
       });
 
-      if (response.status === 201) {
+      if (response.ok) {
         router.push('/');
-      } else {
-        console.error('Server response:', response);
       }
+      console.log(response);
 
     } catch (error) {
-      console.error('Error editing prompt:', error);
+      console.error(error);
     } finally {
       setSubmitting(false);
     }
