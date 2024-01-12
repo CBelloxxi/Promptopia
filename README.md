@@ -7,10 +7,11 @@ Still To Do:
 ** Hint for Search and Click on Tag ** {
 
   [] Implement Search
-    - Search by prompt
+    - Search by prompt content
     - Search by tag
     - Search by username
   [] Implement Click on tag
+    - Click will populate the search are and the feature to implement
 
    1. Code for this will have to be implemented within the Feed Component, add some search states, searchText, searchTimeout, searchResults.
    2. Then will need to filter results by those queries, handling Regex.
