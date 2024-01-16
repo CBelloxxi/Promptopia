@@ -2,80 +2,48 @@
 
 // Import necessary modules and components
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import Profile from '@components/profile';
 
-// Define a React functional component named MyProfile
-const MyProfile = () => {
-  // Access the NextAuth session
-  const { data: session } = useSession();
+// Define a React functional component named UserProfile
+const UserProfile = ({ params }) => {
+  // Search parameters initialization
+  const searchParams = useSearchParams();
 
-  // Access the Next.js router
-  const router = useRouter();
+  // UserName initialization
+  const userName = searchParams.get("name");
 
   // Initialize a state variable using the useState hook to store user's posts
-  const [myPosts, setMyPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
 
   // Fetch user's posts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
-      // Fetch posts data from the serverless function at `/api/users/${session?.user.id}/posts`
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      // Fetch posts data from the serverless function at `/api/users/${params?.id}/posts`
+      const response = await fetch(`/api/users/${params?.id}/posts`);
       const data = await response.json();
 
       // Update the state variable with the fetched posts data
-      setMyPosts(data);
+      setUserPosts(data);
     };
 
-    // Check if the user is logged in (session?.user.id exists) before fetching posts
-    if(session?.user.id) fetchPosts();
-  }, [session?.user.id]);
-
-  // Handle the navigation to the edit prompt page
-  const handleEdit = (post) => {
-    // Navigate to the update-prompt page with the post id as a query parameter
-    router.push(`/update-prompt?id=${post._id}`);
-  }
-
-  // Handle the prompt deletion
-  const handleDelete = async (post) => {
-    // Confirm the user's intention to delete the prompt
-    const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
-
-    if(hasConfirmed) {
-      try {
-        // Send a DELETE request to the serverless function at `/api/prompt/${post._id.toString()}`
-        await fetch(`/api/prompt/${post._id.toString()}`, {
-          method: 'DELETE'
-        });
-
-        // Filter out the deleted post from the local posts state
-        const filteredPosts = myPosts.filter((item) => item._id !== post._id);
-        setMyPosts(filteredPosts);
-
-      } catch (error) {
-        // Log any errors that occur during the deletion process
-        console.log(error);
-      }
-    }
-  }
+    // Check if the parameters exist and select by id said post (params?.id) fetchPosts();
+    if (params?.id) fetchPosts();
+  }, [params.id]);
 
   // Render the Profile component with appropriate props
   return (
     <Profile
-      name="My"
-      desc="Welcome to your personalized profile page"
-      data={myPosts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
+      name={userName}
+      desc={`Welcome to ${userName}'s personalized profile page. Explore ${userName}'s exceptional prompts and be inspired by the power of their imagination`}
+      data={userPosts}
     />
   )
 }
 
-// Export the MyProfile component as the default export
-export default MyProfile;
+// Export the UserProfile component as the default export
+export default UserProfile;
 
 
 // Explanation
