@@ -33,7 +33,7 @@ const Feed = () => {
   // Fetch all posts
   const fetchPosts = async () => {
     try {
-      const response = await fetch("/api/prompt", { cache: 'no-cache'});
+      const response = await fetch("/api/prompt", { cache: 'no-cache'}); // No-cache used to prevent Vercel from not fetching newest or updated data from mongoDB
       const data = await response.json();
       setAllPosts(data);
     } catch (error) {
