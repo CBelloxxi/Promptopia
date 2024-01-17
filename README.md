@@ -4,7 +4,7 @@
 
 <h2>Desktop View</h2>
 
-![Promptopia Gif](https://github.com/CBelloxxi/Promptopia/public/assets/gif/promptopia.gif)
+![Promptopia Gif](https://github.com/CBelloxxi/Promptopia/blob/main/public/assets/gif/promptopia.gif)
 
 <h2>Built with & Features:</h2>
 <li>Javascript</li>
