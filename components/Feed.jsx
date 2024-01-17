@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 import PromptCard from './PromptCard';
 
@@ -29,6 +30,8 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   // State for managing the search debounce
   const [searchTimeout, setSearchTimeout] = useState(null);
+  // Next.js router
+  const router = useRouter();
 
   // Fetch all posts
   const fetchPosts = async () => {
@@ -36,6 +39,7 @@ const Feed = () => {
       const response = await fetch("/api/prompt");
       const data = await response.json();
       setAllPosts(data);
+      reloadPage();
     } catch (error) {
       console.log(error, "Error fetching refreshed posts")
     }
@@ -77,6 +81,11 @@ const Feed = () => {
 
     const searchResult = filterPrompts(tagName);
     setSearchedResults(searchResult);
+  };
+
+  // Function to reload the current page
+  const reloadPage = () => {
+    router.reload();
   };
 
   return (
